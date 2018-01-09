@@ -32,6 +32,8 @@ def get_page():
 
 def wr_page(postings):
     count = 0
+    address = []
+    title = []
     
     for post in postings:
         for t in post:
@@ -39,15 +41,12 @@ def wr_page(postings):
         if 'href' in post.attrs:
             address.append(post.attrs['href'])
 
-    for link in address:
-        count += 1
-        actualLink.append(link )
     try:
         scrapePage = open("trailerScrape.html", "w")
         scrapePage.write("<html>")
         scrapePage.write("<h1 style = \"font-weight:bold; font-size:200%\"> These are the top Craiglist postings for Trailers with a min. price of 2K</h1><br />")
 
-        for link in actualLink:
+        for link in address:
             scrapePage.write("<a href= ")
             scrapePage.write(link)
             scrapePage.write(">")
@@ -58,17 +57,12 @@ def wr_page(postings):
         scrapePage.close()
 
     except:
-        print("Uh-oh something went wrong, unable to open the write file")
-        return
+        print("Uh-oh something went wrong")
 
-craigslist = "https://seattle.craigslist.org"
-actualLink = []
-address = []
-title = []
-
-
-srch_rslts = get_page()
-wr_page(srch_rslts)
+    return
+    
+search_results = get_page()
+wr_page(search_results)
 
 
 print('I finished')
